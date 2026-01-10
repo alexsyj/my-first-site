@@ -14,7 +14,7 @@ jobs:
         with:
           ruby-version: 3.2
       - run: |
-          gem install bundler jekyll
+          gem install bundler jekyll jekyll-theme-chirpy
           jekyll build -d _site
       - uses: peaceiris/actions-gh-pages@v3
         with:
