@@ -1,18 +1,19 @@
-# .github/workflows/deploy.yml
-name: Build and Deploy Jekyll Site
+name: Deploy Jekyll site to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - main  # deploy when pushing to main branch
+
+permissions:
+  contents: read           # read repo contents
+  pages: write             # write to GitHub Pages
+  id-token: write          # needed for deploy-pages@v4
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write  # required for deploy-pages@v4
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -30,7 +31,7 @@ jobs:
       - name: Build Jekyll site
         run: bundle exec jekyll build
 
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
         with:
           path: _site
