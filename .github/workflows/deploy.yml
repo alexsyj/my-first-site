@@ -3,40 +3,40 @@ name: Deploy Jekyll site to GitHub Pages
 on:
   push:
     branches:
-      - main   # Deploy only when pushing to main branch
+      - main  # Change this if your default branch is different
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment:
-      name: github-pages   # Required for deploy-pages@v4
+      name: github-pages   # This is required for Pages deployment
+    permissions:
+      contents: read
+      pages: write
+      id-token: write      # This fixes the ACTIONS_ID_TOKEN_REQUEST_URL error
 
     steps:
-      # 1. Checkout repository
+      # Step 1: Checkout your repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Setup Ruby for Jekyll
+      # Step 2: Setup Ruby (required for Jekyll)
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3
-          bundler-cache: true   # Automatically caches gems to speed up builds
+          ruby-version: '3.3'  # Match your Ruby version
+          bundler-cache: true   # Automatically runs `bundle install`
 
-      # 3. Install dependencies
-      - name: Install gems
-        run: bundle install
-
-      # 4. Build the Jekyll site
+      # Step 3: Build Jekyll site
       - name: Build Jekyll site
-        run: bundle exec jekyll build
+        run: bundle exec jekyll build --destination _site
 
-      # 5. Upload built site as artifact
+      # Step 4: Upload the built site as artifact
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v1
         with:
-          path: ./_site   # The folder Jekyll outputs your site to
+          path: _site
 
-      # 6. Deploy to GitHub Pages
+      # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
