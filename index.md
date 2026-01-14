@@ -1,5 +1,6 @@
 ---
 layout: home
+title: Welcome
 ---
 # Hi, I'm Alex
 
