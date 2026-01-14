@@ -14,21 +14,27 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1️⃣ Checkout code
       - uses: actions/checkout@v3
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      # 2️⃣ Setup Ruby
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2
 
-      - name: Install Bundler
-        run: gem install bundler
+      # 3️⃣ Install Bundler and dependencies
+      - run: |
+          gem install bundler
+          bundle install
 
-      - name: Install Dependencies
-        run: bundle install
+      # 4️⃣ Build the site
+      - run: bundle exec jekyll build -d _site
 
-      - name: Build the Site
-        run: bundle exec jekyll build -d _site
+      # 5️⃣ Upload the site as an artifact
+      - uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: _site
 
-      - name: Deploy to Pages
-        uses: actions/deploy-pages@v4
+      # 6️⃣ Deploy the artifact to GitHub Pages
+      - uses: actions/deploy-pages@v4
