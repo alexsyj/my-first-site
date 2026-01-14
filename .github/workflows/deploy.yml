@@ -1,26 +1,26 @@
 # .github/workflows/deploy.yml
-name: github pages
+name: Build and Deploy Jekyll Site
 
 on:
   push:
     branches:
-      - main  # build on push to main
+      - main
 
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pages: write
-      id-token: write  # <-- required for deploy-pages@v4
+      id-token: write  # required for deploy-pages@v4
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3  # matches GitHub Actions runner
+          ruby-version: 3.3
 
       - name: Install dependencies
         run: |
@@ -31,7 +31,7 @@ jobs:
         run: bundle exec jekyll build
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: _site
 
