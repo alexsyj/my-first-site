@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.4"
-gem "jekyll-theme-chirpy", "~> 6.0"
+gem "github-pages", group: :jekyll_plugins
+gem "jekyll-theme-chirpy"
