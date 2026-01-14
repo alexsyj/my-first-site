@@ -1,8 +1,13 @@
 title: Youngjin's Portfolio
+author: Youngjin
 theme: jekyll-theme-chirpy
+description: My personal portfolio and projects
 
 # Enable Projects collection
 collections:
   projects:
     output: true
     permalink: /projects/:name/
+
+# Homepage settings
+homepage: index
