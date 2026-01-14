@@ -1,7 +1,5 @@
 ---
 layout: home
-title: Welcome
+title: Youngjin's Portfolio
+subtitle: Hi, I'm Youngjin! Welcome to my portfolio.
 ---
-# Hi, I'm Alex
-
-This is my portfolio site. Projects and updates coming soon!
