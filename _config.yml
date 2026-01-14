@@ -1,2 +1,8 @@
 title: My First Jekyll Site
 theme: jekyll-theme-chirpy
+
+# Enable Projects collection
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
