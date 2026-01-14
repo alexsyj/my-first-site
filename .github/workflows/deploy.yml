@@ -1,40 +1,43 @@
-name: Deploy Jekyll site to GitHub Pages
+name: Deploy Jekyll Site
 
 on:
   push:
     branches:
-      - main  # deploy when pushing to main branch
-
-permissions:
-  contents: read           # read repo contents
-  pages: write             # write to GitHub Pages
-  id-token: write          # needed for deploy-pages@v4
+      - main  # Deploy on push to main branch
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      pages: write
+      id-token: write  # Required for deploy-pages@v4
+
     steps:
-      - name: Checkout repository
+      # Checkout the repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
+      # Set up Ruby
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3
+          ruby-version: 3.3  # Match your Gemfile
+          bundler-cache: true
 
+      # Install dependencies
       - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
+        run: bundle install
 
+      # Build the Jekyll site
       - name: Build Jekyll site
         run: bundle exec jekyll build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: _site
-
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
+        with:
+          # _site is the default output folder for Jekyll
+          artifact_name: github-pages
+          # The deploy action automatically picks up the _site folder
