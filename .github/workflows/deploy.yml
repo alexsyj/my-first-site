@@ -7,11 +7,11 @@ on:
 
 permissions:
   contents: read
-  id-token: write
   pages: write
+  id-token: write
 
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       # 1️⃣ Checkout code
@@ -22,7 +22,7 @@ jobs:
         with:
           ruby-version: 3.2
 
-      # 3️⃣ Install Bundler and dependencies
+      # 3️⃣ Install dependencies
       - run: |
           gem install bundler
           bundle install
@@ -30,11 +30,7 @@ jobs:
       # 4️⃣ Build the site
       - run: bundle exec jekyll build -d _site
 
-      # 5️⃣ Upload the site as an artifact
-      - uses: actions/upload-artifact@v4
-        with:
-          name: github-pages
-          path: _site
-
-      # 6️⃣ Deploy the artifact to GitHub Pages
+      # 5️⃣ Deploy to GitHub Pages
       - uses: actions/deploy-pages@v4
+        with:
+          artifact_path: _site
